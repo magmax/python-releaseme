@@ -1,6 +1,6 @@
 import unittest
 
-from versions.version import Version
+from releaseme.version import Version
 
 
 class VersionTest(unittest.TestCase):

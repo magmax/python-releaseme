@@ -16,9 +16,18 @@ Documentation
 Installation
 ------------
 
-::
+Two options: to install it in your system/project::
 
-   pip install releaseme
+    pip install releaseme
+
+And you can use it with::
+
+    python -m releaseme -h
+
+
+Or just `download the lastest zip`_ and use it with::
+
+   python release-X.Y.Z.zip -h
 
 
 
@@ -52,3 +61,4 @@ Licensed under `the MIT license`_.
 .. _@magmax9: https://twitter.com/magmax9
 
 .. _the MIT license: http://opensource.org/licenses/MIT
+.. _download the lastest zip: https://pypi.python.org/pypi/releaseme
