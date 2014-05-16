@@ -25,7 +25,7 @@ class SimpleVersionFile(unittest.TestCase):
     def test_increment_the_file_content(self):
         filename = self.versions_file('0.1.2')
 
-        sut = pexpect.spawn('python -m versions increment --file=%s'
+        sut = pexpect.spawn('python -m releaseme increment --file=%s'
                             % filename)
 
         sut.expect('0.1.3', timeout=2)

@@ -1,4 +1,4 @@
-MODULES=versions
+MODULES=releaseme
 
 all: pep8 flakes test
 
