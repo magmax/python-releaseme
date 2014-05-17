@@ -27,7 +27,9 @@ And you can use it with::
 
 Or just `download the lastest zip`_ and use it with::
 
-   python release-X.Y.Z.zip -h
+   python releaseme-X.Y.Z.zip -h
+
+
 
 
 

@@ -15,7 +15,9 @@ def main():
 
     args = parser.parse_args()
 
-    getattr(actions, args.command)(args)
+    new_version = getattr(actions, args.command)(args)
+
+    print("New version: %s" % new_version)
 
 
 if __name__ == '__main__':

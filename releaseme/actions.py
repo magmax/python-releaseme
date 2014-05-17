@@ -7,10 +7,11 @@ class Actions(object):
             with file(filename) as fd:
                 version = Version(fd.read())
 
-            version = Version('0.1.3')
+            version.increment()
             with file(filename, 'w') as fd:
                 fd.write(str(version))
-            print version
+
+        return version
 
     def get(self):
         pass

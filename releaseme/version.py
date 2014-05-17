@@ -26,13 +26,13 @@ class Version(object):
 
         return result
 
-    def increment(self):
+    def increment(self, increment=1):
         splitted = self.split()
 
         for i in range(len(splitted)-1, 0, -1):
             if not self._is_number(splitted[i]):
                 continue
-            splitted[i] += 1
+            splitted[i] += increment
             break
 
         self._number = self._join(splitted)

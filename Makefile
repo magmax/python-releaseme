@@ -22,7 +22,7 @@ coveralls::
 	coveralls
 
 publish::
-	@python setup.py sdist upload --formats zip,gztar
+	@python setup.py sdist --formats zip,gztar upload
 
 run_unit_tests:
 	@echo Running Tests...
