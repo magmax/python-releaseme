@@ -10,7 +10,7 @@ class Actions(object):
 
             version.increment()
             with open(filename, 'w') as fd:
-                fd.write(str(version))
+                fd.write(str(version).encode('utf-8'))
 
         return version
 
