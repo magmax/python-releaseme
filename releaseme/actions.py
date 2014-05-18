@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from .version import Version
 
 
@@ -9,7 +10,7 @@ class Actions(object):
 
             version.increment()
             with open(filename, 'w') as fd:
-                fd.write(bytes(version, 'utf-8'))
+                fd.write(str(version))
 
         return version
 
