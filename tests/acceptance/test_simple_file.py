@@ -38,5 +38,5 @@ class SimpleVersionFile(unittest.TestCase):
         sut = pexpect.spawn('python -m releaseme increment --file=%s'
                             % filename)
 
-        sut.expect('1.2.3', timeout=2)
-        self.assertFileContent(filename, '1.2.3')
+        sut.expect('1.2.4', timeout=2)
+        self.assertFileContent(filename, '1.2.4')
