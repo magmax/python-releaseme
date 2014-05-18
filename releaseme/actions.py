@@ -5,7 +5,7 @@ class Actions(object):
     def increment(self, options):
         for filename in options.file:
             with file(filename) as fd:
-                version = Version(fd.read())
+                version = Version(fd.read().decode('utf-8'))
 
             version.increment()
             with file(filename, 'w') as fd:
