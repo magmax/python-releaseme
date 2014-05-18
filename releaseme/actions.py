@@ -4,11 +4,11 @@ from .version import Version
 class Actions(object):
     def increment(self, options):
         for filename in options.file:
-            with file(filename) as fd:
-                version = Version(fd.read().decode('utf-8'))
+            with open(filename) as fd:
+                version = Version(fd.read())
 
             version.increment()
-            with file(filename, 'w') as fd:
+            with open(filename, 'w') as fd:
                 fd.write(str(version))
 
         return version
