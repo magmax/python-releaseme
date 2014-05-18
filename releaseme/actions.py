@@ -10,7 +10,6 @@ class Actions(object):
             version.increment()
             with file(filename, 'w') as fd:
                 fd.write(str(version))
-
         return version
 
     def get(self):
