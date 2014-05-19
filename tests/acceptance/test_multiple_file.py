@@ -3,10 +3,10 @@ import tempfile
 import unittest
 import pexpect
 
-from .base import AcceptanceTest
+from .base import FileAcceptanceTest
 
 
-class MultipleVersionFile(AcceptanceTest, unittest.TestCase):
+class MultipleVersionFile(FileAcceptanceTest, unittest.TestCase):
     def test_takes_the_max_in_two_files(self):
         filename1 = self.versions_file('0.1.2')
         filename2 = self.versions_file('0.1.3')

@@ -7,26 +7,29 @@ class Actions(object):
         version = None
 
         for filename in options.file:
-            with open(filename) as fd:
-                v = Version(fd.read().decode('utf-8'))
-            if version is None or v > version:
-                version = v
+            version = max(version,
+                          self._get_version_from_file(filename))
 
         version.increment()
-        str_version = str(version)
 
         for filename in options.file:
-            with open(filename, 'wt') as fd:
-                fd.write(str_version)
+            self._save_version_to_file(filename, version)
 
         return version
+
+    def _get_version_from_file(self, filename):
+            with open(filename) as fd:
+                return Version(fd.read().decode('utf-8'))
+
+    def _save_version_to_file(self, filename, version):
+        with open(filename, 'wt') as fd:
+            fd.write(str(version))
 
     def get(self):
         pass
 
     @property
     def choices(self):
-        return ['increment', 'get']
-        return [x
-                for x in self.__dict__.keys()
-                if x is not 'choices' and not x.startswith('_')]
+        return sorted([x
+                       for x in dir(self)
+                       if x is not 'choices' and not x.startswith('_')])

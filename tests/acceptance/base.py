@@ -3,7 +3,7 @@ import tempfile
 import pexpect
 
 
-class AcceptanceTest(object):
+class FileAcceptanceTest(object):
     def setUp(self):
         self._tempfiles = []
 
