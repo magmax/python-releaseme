@@ -9,7 +9,7 @@ class Version(object):
 
     def split(self):
         return [int(x) if self._is_number(x) else x
-                for x in self.SPLIT.split(self._number)]
+                for x in self.SPLIT.split(self._number.strip())]
 
     def _join(self, v):
         result = ''

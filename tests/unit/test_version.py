@@ -24,6 +24,11 @@ class VersionTest(unittest.TestCase):
 
         self.assertEquals('0.0.0-example1', str(sut))
 
+    def test_bug_1_with_enters(self):
+        sut = Version('0.1.1\r\n')
+
+        self.assertEquals('0.1.1\r\n', str(sut))
+
 
 class VersionIncrementTest(unittest.TestCase):
     def test_basic_increment(self):
@@ -47,3 +52,26 @@ class VersionIncrementTest(unittest.TestCase):
         sut.increment()
 
         self.assertEquals('0.0.1-example1', str(sut))
+
+
+class VersionComparisionTest(unittest.TestCase):
+    def test_basic_comparision(self):
+        a = Version('0')
+        b = Version('1')
+
+        self.assertTrue(a < b)
+        self.assertTrue(b > a)
+
+    def test_basic_comparision_with_two_numbers(self):
+        a = Version('0.1')
+        b = Version('0.2')
+
+        self.assertTrue(a < b)
+        self.assertTrue(b > a)
+
+    def test_with_strings(self):
+        a = Version('0.1-foo1')
+        b = Version('0.1-foo2')
+
+        self.assertTrue(a < b)
+        self.assertTrue(b > a)
