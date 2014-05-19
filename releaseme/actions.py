@@ -9,8 +9,8 @@ class Actions(object):
                 version = Version(fd.read().decode('utf-8'))
 
             version.increment()
-            with open(filename, 'w') as fd:
-                fd.write(bytes(str(version), 'utf-8')
+            with open(filename, 'wt') as fd:
+                fd.write(str(version))
 
         return version
 
