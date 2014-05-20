@@ -12,6 +12,9 @@ def main():
     parser.add_argument('--file',
                         nargs='*',
                         help='File that manages the version')
+    parser.add_argument('--git',
+                        action="store_true", default=False,
+                        help='Manages versions with Git tags')
 
     args = parser.parse_args()
 
