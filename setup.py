@@ -28,5 +28,7 @@ setup(name='releaseme',
       packages=find_packages(exclude=['tests']),
       include_package_data=True,
       zip_safe=False,
-      install_requires=[],
+      install_requires=[
+        'pluginloader==0.1.1',
+      ],
       )

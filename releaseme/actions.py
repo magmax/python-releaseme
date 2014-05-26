@@ -4,6 +4,9 @@ from .version import Version
 
 
 class Actions(object):
+    def __init__(self, plugins):
+        self._plugins = plugins
+
     def increment(self, options):
         version = self._get_higher_version(options)
         version.increment()
