@@ -1,4 +1,8 @@
 import re
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class Version(object):
@@ -9,7 +13,7 @@ class Version(object):
 
     def split(self):
         return [int(x) if self._is_number(x) else x
-                for x in self.SPLIT.split(self._number.strip())]
+                for x in self.SPLIT.split(self._number.strip() or '0')]
 
     def _join(self, v):
         result = ''
@@ -41,4 +45,12 @@ class Version(object):
         return all(x.isdigit() for x in str(n))
 
     def __str__(self):
-        return self._number
+        return (self._number or '0').strip()
+
+    def __gt__(self, value):
+        if isinstance(value, Version):
+            result = self.split() > value.split()
+            logger.debug('Compare %s > %s = %s', self, value, result)
+            return result
+        logger.debug('Compare %s > %s = True', self, value)
+        return True

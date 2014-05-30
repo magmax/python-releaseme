@@ -9,6 +9,11 @@ class VersionTest(unittest.TestCase):
 
         self.assertEquals('0.0.0', str(sut))
 
+    def test_empty_string(self):
+        sut = Version('')
+
+        self.assertEquals('0', str(sut))
+
     def test_split(self):
         sut = Version('0.0.0')
 
@@ -61,17 +66,23 @@ class VersionComparisionTest(unittest.TestCase):
 
         self.assertTrue(a < b)
         self.assertTrue(b > a)
+        self.assertEqual(b, max(a, b))
+        self.assertEqual(b, max(b, a))
 
     def test_basic_comparision_with_two_numbers(self):
-        a = Version('0.1')
         b = Version('0.2')
+        a = Version('0.1')
 
         self.assertTrue(a < b)
         self.assertTrue(b > a)
+        self.assertEqual(b, max(a, b))
+        self.assertEqual(b, max(b, a))
 
     def test_with_strings(self):
-        a = Version('0.1-foo1')
         b = Version('0.1-foo2')
+        a = Version('0.1-foo1')
 
         self.assertTrue(a < b)
         self.assertTrue(b > a)
+        self.assertEqual(b, max(a, b))
+        self.assertEqual(b, max(b, a))

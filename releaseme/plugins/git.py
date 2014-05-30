@@ -1,3 +1,7 @@
+from releaseme.version import Version
+from releaseme import sh
+
+
 class Git(object):
     name = 'Git'
     description = 'Git repository management'
@@ -8,8 +12,13 @@ class Git(object):
                            action="store_true", default=False,
                            help='Manages versions with Git tags')
 
-    def get_version(self):
+    def initialize(self, args):
         pass
+
+    def get_version(self):
+        stdout, stderr, rc = sh.run('git', 'tag')
+        return max(Version(tag)
+                   for tag in (stdout or '').split('\n'))
 
     def set_version(self):
         pass
