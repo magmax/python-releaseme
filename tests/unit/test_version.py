@@ -32,7 +32,7 @@ class VersionTest(unittest.TestCase):
     def test_bug_1_with_enters(self):
         sut = Version('0.1.1\r\n')
 
-        self.assertEquals('0.1.1\r\n', str(sut))
+        self.assertEquals('0.1.1', str(sut))
 
 
 class VersionIncrementTest(unittest.TestCase):
