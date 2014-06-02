@@ -1,10 +1,12 @@
 from releaseme.version import Version
 from releaseme import sh
+from releaseme import errors
 
 
 class Git(object):
     name = 'Git'
     description = 'Git repository management'
+    should_run = True
 
     @staticmethod
     def options(group):
@@ -13,12 +15,20 @@ class Git(object):
                            help='Manages versions with Git tags')
 
     def initialize(self, args):
-        pass
+        self.should_run = args.git
 
     def get_version(self):
+        if not self.should_run:
+            return Version('0')
+
         stdout, stderr, rc = sh.run('git', 'tag')
         return max(Version(tag)
                    for tag in (stdout or '').split('\n'))
 
-    def set_version(self):
-        pass
+    def set_version(self, version):
+        if not self.should_run:
+            return
+
+        stdout, stderr, rc = sh.run('git', 'tag', str(version))
+        if rc != 0:
+            raise errors.PluginError('Repository could not be tagged')

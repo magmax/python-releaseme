@@ -33,13 +33,14 @@ class Version(object):
     def increment(self, increment=1):
         splitted = self.split()
 
-        for i in range(len(splitted)-1, 0, -1):
-            if not self._is_number(splitted[i]):
+        for i in range(len(splitted), 0, -1):
+            if not self._is_number(splitted[i-1]):
                 continue
-            splitted[i] += increment
+            splitted[i-1] += increment
             break
 
         self._number = self._join(splitted)
+        return self
 
     def _is_number(self, n):
         return all(x.isdigit() for x in str(n))
@@ -54,3 +55,6 @@ class Version(object):
             return result
         logger.debug('Compare %s > %s = True', self, value)
         return True
+
+    def __add__(self, value):
+        return self.increment(value)

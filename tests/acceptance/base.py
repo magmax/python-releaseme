@@ -28,17 +28,25 @@ class FileAcceptanceTest(object):
 class GitAcceptanceTest(object):
     def setUp(self):
         self._git = tempfile.mkdtemp()
-        subprocess.check_call('git init'.split(), cwd=self._git)
-
-    def add_commit(self):
-        with open(os.path.join(self._git, 'foo')) as fd:
-            fd.write('foo\n')
-        subprocess.check_call('git add foo'.split(), cwd=self._git)
-        subprocess.check_call('git commit -m "foo"'.split(), cwd=self._git)
+        subprocess.check_call('git init'.split(),
+                              cwd=self._git)
 
     def tearDown(self):
         shutil.rmtree(self._git)
 
+    @property
+    def cwd(self):
+        return self._git
+
+    def add_commit(self):
+        with open(os.path.join(self._git, 'foo')) as fd:
+            fd.write('foo\n')
+        subprocess.check_call('git add foo'.split(),
+                              cwd=self._git)
+        subprocess.check_call('git commit -m "foo"'.split(),
+                              cwd=self._git)
+
     def assertTag(self, tag):
-        if subprocess.check_call(['git', 'tag', tag], cwd=self._git) == 0:
+        if subprocess.check_call(['git', 'tag', tag],
+                                 cwd=self._git) == 0:
             self.fail('Tag %s does not exist' % tag)

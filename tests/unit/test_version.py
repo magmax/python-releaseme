@@ -58,6 +58,14 @@ class VersionIncrementTest(unittest.TestCase):
 
         self.assertEquals('0.0.1-example1', str(sut))
 
+    def test_operator_with_number(self):
+        sut = Version('0.0.0')
+
+        sut += 1
+
+        self.assertEquals('0.0.1', str(sut))
+        self.assertIsInstance(sut, Version)
+
 
 class VersionComparisionTest(unittest.TestCase):
     def test_basic_comparision(self):

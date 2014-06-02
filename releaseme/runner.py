@@ -2,9 +2,10 @@ import os
 import logging
 import argparse
 from pluginloader import PluginLoader
+from .version import Version
+from . import errors
 
-
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('releaseme')
 
 
 def logging_settings(args):
@@ -15,6 +16,7 @@ def logging_settings(args):
         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
         datefmt='%m-%d %H:%M',
         )
+    logger.setLevel(level)
 
 
 class Runner(object):
@@ -23,26 +25,23 @@ class Runner(object):
         self.args = None
 
     def run(self):
-        self._load_plugins()
-        self._parse_args()
+        try:
+            self._load_plugins()
+            self._parse_args()
+            self._initialize()
+            version = self._retrieve_version()
+            if self.args.command == 'get':
+                print("Current version: %s" % version)
+                return
 
-        # initialize plugins
-        for plugin in self.plugins:
-            plugin.initialize(self.args)
+            if self.args.command == 'increment':
+                version += 1
 
-        # retrieve the new version
-        new_version = None
-        for plugin in self.plugins:
-            logger.debug('Getting version from plugin %s', plugin.name)
-            new_version = max(new_version, plugin.get_version())
-            logger.debug('Current version: %s', new_version)
-        logger.info("New version: %s" % new_version)
-
-        # action
-        if self.args.command == 'increment':
-            pass
-        elif self.args.command == 'get':
-            print("New version: %s" % new_version)
+                logger.info("Increasing version to: %s" % version)
+                self._set_version(version)
+        except errors.PluginError as e:
+            print str(e)
+            return 2
 
     def _load_plugins(self):
         plugin_path = os.path.join(
@@ -68,6 +67,23 @@ class Runner(object):
 
         self.args = parser.parse_args()
         logging_settings(self.args)
+
+    def _initialize(self):
+        for plugin in self.plugins:
+            plugin.initialize(self.args)
+
+    def _retrieve_version(self):
+        result = Version('0')
+        for plugin in self.plugins:
+            logger.debug('Getting version from plugin %s', plugin.name)
+            result = max(result, plugin.get_version())
+            logger.debug('Current version: %s', result)
+        logger.info("Current version: %s" % result)
+        return result
+
+    def _set_version(self, version):
+        for plugin in self.plugins:
+            plugin.set_version(version)
 
     def _check_plugin(self, name, clazz):
         methods = ('options', 'initialize', 'get_version', 'set_version')

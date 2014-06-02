@@ -11,7 +11,7 @@ class MultipleVersionFile(FileAcceptanceTest, unittest.TestCase):
         filename1 = self.versions_file('0.1.2')
         filename2 = self.versions_file('0.1.3')
 
-        sut = pexpect.spawn('python -m releaseme increment --file %s %s'
+        sut = pexpect.spawn('python -m releaseme increment --file %s %s -v'
                             % (filename1, filename2))
 
         sut.expect('0.1.4', timeout=2)
