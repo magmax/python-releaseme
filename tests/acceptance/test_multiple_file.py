@@ -15,5 +15,6 @@ class MultipleVersionFile(FileAcceptanceTest, unittest.TestCase):
                             % (filename1, filename2))
 
         sut.expect('0.1.4', timeout=2)
+        sut.wait()
         self.assertFileContent(filename1, '0.1.4')
         self.assertFileContent(filename2, '0.1.4')

@@ -29,7 +29,9 @@ class GitAcceptanceTest(object):
     def setUp(self):
         self._git = tempfile.mkdtemp()
         subprocess.check_call('git init'.split(),
-                              cwd=self._git)
+                              cwd=self._git,
+                              stdout=subprocess.PIPE
+                              )
 
     def tearDown(self):
         shutil.rmtree(self._git)
