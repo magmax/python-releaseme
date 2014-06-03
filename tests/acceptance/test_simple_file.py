@@ -14,6 +14,7 @@ class SimpleVersionFile(FileAcceptanceTest, unittest.TestCase):
                             % filename)
 
         sut.expect('0.1.3', timeout=2)
+        sut.wait()
         self.assertFileContent(filename, '0.1.3')
 
     def test_increment_the_file_content_again(self):
@@ -23,6 +24,7 @@ class SimpleVersionFile(FileAcceptanceTest, unittest.TestCase):
                             % filename)
 
         sut.expect('1.2.4', timeout=2)
+        sut.wait()
         self.assertFileContent(filename, '1.2.4')
 
     def test_rare_case(self):
@@ -32,4 +34,5 @@ class SimpleVersionFile(FileAcceptanceTest, unittest.TestCase):
                             % filename)
 
         sut.expect('0.1.2', timeout=10)
+        sut.wait()
         self.assertFileContent(filename, '0.1.2')
