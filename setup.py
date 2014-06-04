@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-from releaseme import __version__, __description__
+from releaseme import APP
 
 
 def read_description():
@@ -10,8 +10,8 @@ def read_description():
 
 
 setup(name='releaseme',
-      version=__version__,
-      description=__description__,
+      version=APP.version,
+      description=APP.description,
       long_description=read_description(),
       classifiers=[
           'Development Status :: 4 - Beta',
@@ -29,6 +29,6 @@ setup(name='releaseme',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-        'pluginloader==0.1.1',
+        'pluginloader>=0.1.2',
       ],
       )
