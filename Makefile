@@ -26,7 +26,7 @@ publish::
 
 run_unit_tests:
 	@echo Running Tests...
-	@nosetests -dv --exe --with-xcoverage --cover-package=${MODULES} --cover-tests tests/unit
+	@nosetests -dvx --exe --with-xcoverage --cover-package=${MODULES} --cover-tests tests/unit
 
 run_integration_tests:
 	@echo Running Tests...

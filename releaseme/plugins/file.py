@@ -30,4 +30,4 @@ class File(object):
 
     def _save_version_to_file(self, filename, version):
         with open(filename, 'wt') as fd:
-            fd.write(str(version))
+            fd.write(version.content)
