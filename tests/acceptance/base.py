@@ -28,10 +28,7 @@ class FileAcceptanceTest(object):
 class GitAcceptanceTest(object):
     def setUp(self):
         self._git = tempfile.mkdtemp()
-        subprocess.check_call('git init'.split(),
-                              cwd=self._git,
-                              stdout=subprocess.PIPE
-                              )
+        self.shell('git init')
 
     def tearDown(self):
         shutil.rmtree(self._git)
@@ -41,14 +38,28 @@ class GitAcceptanceTest(object):
         return self._git
 
     def add_commit(self):
-        with open(os.path.join(self._git, 'foo')) as fd:
+        filename = 'foo'
+        with open(os.path.join(self._git, filename), 'w+') as fd:
             fd.write('foo\n')
-        subprocess.check_call('git add foo'.split(),
-                              cwd=self._git)
-        subprocess.check_call('git commit -m "foo"'.split(),
-                              cwd=self._git)
+        self.shell('git add %s' % filename)
+        self.shell('git commit -m "%s"' % filename)
+
+    def add_tag(self, tag):
+        self.shell('git tag "%s"' % tag.strip())
 
     def assertTag(self, tag):
-        if subprocess.check_call(['git', 'tag', tag],
-                                 cwd=self._git) == 0:
-            self.fail('Tag %s does not exist' % tag)
+        tags, stderr, rc = self.shell('git tag')
+        stdout, stderr, rc = self.shell('git tag "%s"')
+        self.assertEqual(2, rc, 'Tag %s does not exist. Tag list:\n %s'
+                         % (tag, tags))
+
+    def shell(self, cmd):
+        p = subprocess.Popen(cmd.split(),
+                             stderr=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             cwd=self._git,
+                             )
+        stdout, stderr = p.communicate()
+        rc = p.wait()
+
+        return stdout, stderr, rc
