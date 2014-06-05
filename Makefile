@@ -23,6 +23,7 @@ coveralls::
 
 publish::
 	@python setup.py sdist --formats zip,gztar upload
+	python -m releaseme --git --file releaseme/__init__.py
 
 run_unit_tests:
 	@echo Running Tests...

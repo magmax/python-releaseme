@@ -55,7 +55,6 @@ class Version(object):
 
             result += '.' if self._is_number(v[i+1]) else '-'
 
-        print v, result
         return result
 
     def _is_number(self, n):
