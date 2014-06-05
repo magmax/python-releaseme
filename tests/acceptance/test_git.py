@@ -16,8 +16,6 @@ class BasicGitTest(GitAcceptanceTest, unittest.TestCase):
         sut.expect('0', timeout=2)
         self.assertEqual(0, sut.wait())
 
-#        self.assertTag('0')
-
     def test_previously_tagged(self):
         self.add_commit()
         self.add_tag('1.2.3')

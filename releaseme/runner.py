@@ -42,7 +42,7 @@ class Runner(object):
                 logger.info("Increasing version to: %s" % version)
                 self._set_post_incr_version(version)
         except errors.PluginError as e:
-            print str(e)
+            print(str(e))
             return 2
 
     def _load_plugins(self):
