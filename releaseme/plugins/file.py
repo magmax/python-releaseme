@@ -4,6 +4,8 @@ from releaseme.version import Version
 class File(object):
     name = 'File'
     description = 'Manages versions on files'
+    pre_increment = False
+    post_increment = True
 
     @staticmethod
     def options(group):

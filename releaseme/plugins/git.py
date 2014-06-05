@@ -7,6 +7,8 @@ class Git(object):
     name = 'Git'
     description = 'Git repository management'
     should_run = True
+    pre_increment = True
+    post_increment = False
 
     @staticmethod
     def options(group):

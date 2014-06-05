@@ -18,7 +18,6 @@ class BasicGitTest(GitAcceptanceTest, unittest.TestCase):
 
 #        self.assertTag('0')
 
-    @unittest.skip('not ready')
     def test_previously_tagged(self):
         self.add_commit()
         self.add_tag('1.2.3')

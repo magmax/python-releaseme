@@ -49,9 +49,9 @@ class GitAcceptanceTest(object):
 
     def assertTag(self, tag):
         tags, stderr, rc = self.shell('git tag')
-        stdout, stderr, rc = self.shell('git tag "%s"')
-        self.assertEqual(2, rc, 'Tag %s does not exist. Tag list:\n %s'
-                         % (tag, tags))
+        self.assertIn(tag, tags.splitlines(),
+                      'Tag %s does not exist. Tag list:\n%s'
+                      % (tag, tags))
 
     def shell(self, cmd):
         p = subprocess.Popen(cmd.split(),

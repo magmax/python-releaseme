@@ -35,10 +35,12 @@ class Runner(object):
                 return
 
             if self.args.command == 'increment':
+                logger.info("Previous version: %s" % version)
+                self._set_pre_incr_version(version)
                 version += 1
 
                 logger.info("Increasing version to: %s" % version)
-                self._set_version(version)
+                self._set_post_incr_version(version)
         except errors.PluginError as e:
             print str(e)
             return 2
@@ -81,9 +83,15 @@ class Runner(object):
         logger.info("Current version: %s" % result)
         return result
 
-    def _set_version(self, version):
+    def _set_pre_incr_version(self, version):
         for plugin in self.plugins:
-            plugin.set_version(version)
+            if plugin.pre_increment:
+                plugin.set_version(version)
+
+    def _set_post_incr_version(self, version):
+        for plugin in self.plugins:
+            if plugin.post_increment:
+                plugin.set_version(version)
 
     def _check_plugin(self, name, clazz):
         methods = ('options', 'initialize', 'get_version', 'set_version')
