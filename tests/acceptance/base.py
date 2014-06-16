@@ -25,6 +25,18 @@ class FileAcceptanceMixin(object):
             self.assertEquals(version, fd.read())
 
 
+def shell(cmd, cwd):
+    p = subprocess.Popen(cmd.split(),
+                         stderr=subprocess.PIPE,
+                         stdout=subprocess.PIPE,
+                         cwd=cwd,
+                         )
+    stdout, stderr = p.communicate()
+    rc = p.wait()
+
+    return stdout, stderr, rc
+
+
 class GitAcceptanceMixin():
     def setUp(self):
         self._git = tempfile.mkdtemp()
@@ -37,9 +49,12 @@ class GitAcceptanceMixin():
     def cwd(self):
         return self._git
 
+    def shell(self, cmd):
+        return shell(cmd, cwd=self._git)
+
     def add_commit(self):
         filename = 'foo'
-        with open(os.path.join(self._git, filename), 'w+') as fd:
+        with open(os.path.join(self._git, filename), 'a+') as fd:
             fd.write('foo\n')
         self.shell('git add %s' % filename)
         self.shell('git commit -m "%s"' % filename)
@@ -53,13 +68,34 @@ class GitAcceptanceMixin():
                       'Tag %s does not exist. Tag list:\n%s'
                       % (tag, tags))
 
-    def shell(self, cmd):
-        p = subprocess.Popen(cmd.split(),
-                             stderr=subprocess.PIPE,
-                             stdout=subprocess.PIPE,
-                             cwd=self._git,
-                             )
-        stdout, stderr = p.communicate()
-        rc = p.wait()
 
-        return stdout, stderr, rc
+class HgAcceptanceMixin():
+    def setUp(self):
+        self._hg = tempfile.mkdtemp()
+        self.shell('hg init')
+
+    def tearDown(self):
+        shutil.rmtree(self._hg)
+
+    @property
+    def cwd(self):
+        return self._hg
+
+    def shell(self, cmd):
+        return shell(cmd, cwd=self._hg)
+
+    def add_commit(self):
+        filename = 'foo'
+        with open(os.path.join(self._hg, filename), 'a+') as fd:
+            fd.write('foo\n')
+        self.shell('hg add %s' % filename)
+        self.shell('hg commit -m "%s"' % filename)
+
+    def add_tag(self, tag):
+        self.shell('hg tag "%s"' % tag.strip())
+
+    def assertTag(self, tag):
+        tags, stderr, rc = self.shell('hg -y tags')
+        self.assertIn(tag, [x.split()[0] for x in tags.splitlines()],
+                      'Tag %s does not exist. Tag list:\n%s'
+                      % (tag, tags))

@@ -82,7 +82,7 @@ Options
 
 **Releaseme** format is::
 
-    [-h] [-v] [--git] [--file [FILE [FILE ...]]] [ACTION]
+    [-h] [-v] [--git] [--mercurial] [--file [FILE [FILE ...]]] [ACTION]
 
 Where **Action** is any of :code:`get` or :code:`increment`. If none is provided, `increment` will be used:
 
@@ -93,6 +93,11 @@ Where **Action** is any of :code:`get` or :code:`increment`. If none is provided
 ~~~~~~~~~~~~~
 
 If you are using a Git repository, this will use git tags to get/set the version. No more arguments are required.
+
+:code:`--hg` or :code:`--mercurial`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you are using a Mercurial repository, this will use mercurial tags to get/set the version. No more arguments are required.
 
 :code:`--file`
 ~~~~~~~~~~~~~~

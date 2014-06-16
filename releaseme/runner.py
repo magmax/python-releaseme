@@ -64,6 +64,7 @@ class Runner(object):
                             help='Verbosity level')
 
         for plugin in self.plugins:
+            print 'plugin:', plugin
             group = parser.add_argument_group(plugin.name, plugin.description)
             plugin.options(group)
 
