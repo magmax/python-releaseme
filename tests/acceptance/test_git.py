@@ -4,10 +4,10 @@ import unittest
 import shutil
 import pexpect
 
-from .base import GitAcceptanceTest
+from .base import GitAcceptanceMixin
 
 
-class BasicGitTest(GitAcceptanceTest, unittest.TestCase):
+class BasicGitTest(GitAcceptanceMixin, unittest.TestCase):
     def test_with_no_tags(self):
         self.add_commit()
         sut = pexpect.spawn('python -m releaseme increment --git -v',

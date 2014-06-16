@@ -3,10 +3,10 @@ import tempfile
 import unittest
 import pexpect
 
-from .base import FileAcceptanceTest
+from .base import FileAcceptanceMixin
 
 
-class FileWithContent(FileAcceptanceTest, unittest.TestCase):
+class FileWithContent(FileAcceptanceMixin, unittest.TestCase):
     def test_one_line_file_is_maintained(self):
         filename = self.versions_file('__version__ = "0.1.2"')
 

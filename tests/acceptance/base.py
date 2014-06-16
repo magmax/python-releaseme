@@ -5,7 +5,7 @@ import subprocess
 import pexpect
 
 
-class FileAcceptanceTest(object):
+class FileAcceptanceMixin(object):
     def setUp(self):
         self._tempfiles = []
 
@@ -25,7 +25,7 @@ class FileAcceptanceTest(object):
             self.assertEquals(version, fd.read())
 
 
-class GitAcceptanceTest(object):
+class GitAcceptanceMixin():
     def setUp(self):
         self._git = tempfile.mkdtemp()
         self.shell('git init')

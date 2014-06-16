@@ -3,10 +3,10 @@ import tempfile
 import unittest
 import pexpect
 
-from .base import FileAcceptanceTest
+from .base import FileAcceptanceMixin
 
 
-class SimpleVersionFile(FileAcceptanceTest, unittest.TestCase):
+class SimpleVersionFile(FileAcceptanceMixin, unittest.TestCase):
     def test_increment_the_file_content(self):
         filename = self.versions_file('0.1.2')
 
