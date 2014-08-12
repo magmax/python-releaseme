@@ -2,7 +2,7 @@ MODULES=releaseme
 
 all: pep8 flakes test
 
-test:: clear_coverage run_unit_tests run_integration_tests run_acceptance_tests
+test:: clear_coverage run_integration_tests run_acceptance_tests
 
 unit_test:: run_unit_tests
 
@@ -31,15 +31,15 @@ run_tag::
 
 run_unit_tests:
 	@echo Running Tests...
-	@nosetests -dvx --exe --with-xcoverage --cover-package=${MODULES} --cover-tests tests/unit
+	@py.test -v -l --cov releaseme tests/unit
 
 run_integration_tests:
 	@echo Running Tests...
-	@nosetests -dv --exe --with-xcoverage --cover-package=${MODULES} --cover-tests tests/integration
+	@py.test -v -l --cov releaseme tests/unit tests/integration
 
 run_acceptance_tests:
 	@echo Running Tests...
-	@nosetests -dv --exe tests/acceptance
+	@py.test -v -l tests/acceptance
 
 clear_coverage:
 	@echo Cleaning previous coverage...
